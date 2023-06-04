@@ -13,6 +13,6 @@
 </h2>
 <div id="{{ $body }}" class="hidden transition" aria-labelledby="{{ $heading }}">
     <div class="px-4 py-5 border-b border-black-200">
-        <div class="mb-2 text-black-50">{!! nl2br(e($answer)) !!}</div>
+        <div class="mb-2 text-sm text-black-50">{!! nl2br(e($answer)) !!}</div>
     </div>
 </div>
