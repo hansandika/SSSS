@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -17,14 +16,9 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $attr = $request->validate([
-            'email' => ['required'],
-            'password' => ['required']
-        ]);
-
-        if (Auth::attempt(['email' => $attr['email'], 'password' => $attr['password']], $request->remember)) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             return redirect('/')->with('success', 'Login Successfully');
         }
 
@@ -55,24 +49,23 @@ class LoginController extends Controller
         }
 
         $user = User::where([
-            'provider' => $provider,
-            'provider_id' => $socialiteUser->getId()
+            'email' => $socialiteUser->getEmail(),
         ])->first();
 
         if (!$user) {
-            $validator = Validator::make(
-                ['email' => $socialiteUser->getEmail()],
-                ['email' => 'unique:users,email'],
-                ['email.unique' => 'The email has already been taken.']
-            );
-
-            if ($validator->fails()) {
-                return redirect('/login')->withErrors($validator);
-            }
-
-            $user = User::create([
-                'name' => $socialiteUser->getName(),
+            $user = User::Create([
                 'email' => $socialiteUser->getEmail(),
+                'provider' => $provider,
+                'provider_id' => $socialiteUser->getId(),
+            ]);
+        }
+
+        if ($user && $user->provider !== $provider) {
+            return redirect()->to('/')->with('error', 'You have already registered with another provider');
+        }
+
+        if ($user && !$user->provider_id) {
+            $user->update([
                 'provider' => $provider,
                 'provider_id' => $socialiteUser->getId(),
             ]);

@@ -20,11 +20,11 @@ Route::post("/login", [Auth\LoginController::class, "login"])->name("login");
 Route::get("/register", [Auth\RegisterController::class, "index"])->name("show.register");
 Route::post("/register", [Auth\RegisterController::class, "register"])->name("register");
 
-Route::get("/logout", [Auth\LoginController::class, "logout"])->name("logout");
-
-
 Route::get("/auth/{provider}", [Auth\LoginController::class, 'providerLogin'])->name('provider.login');
 Route::get("/auth/{provider}/callback", [Auth\LoginController::class, 'providerCallback'])->name('provider.callback');
+
+Route::get("/logout", [Auth\LoginController::class, "logout"])->name("logout");
+
 
 Route::get("/posts/create", [PostController::class, "create"])->name("posts.create");
 Route::post("/posts", [PostController::class, "store"])->name("posts.store");
@@ -32,3 +32,8 @@ Route::get("/posts/{slug}", [PostController::class, "show"])->name("posts.show")
 Route::get("/posts/{slug}/edit", [PostController::class, "edit"])->name("posts.edit");
 Route::patch("/posts/{slug}", [PostController::class, "update"])->name("posts.update");
 Route::delete("/posts/{slug}", [PostController::class, "destroy"])->name("posts.destroy");
+
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+Route::get("/terms-and-condition", TermsAndConditionsController::class)->name("show.terms-and-conditions");

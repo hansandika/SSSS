@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return ucfirst($this->gender);
     }
+
+    public function getNameAttribute(): string
+    {
+        return ucfirst($this->name ? $this->name : 'Anonymous');
+    }
 }

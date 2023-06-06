@@ -23,14 +23,15 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '1999-01-01',
             ],
             [
-                'name' => 'z123046',
-                'email' => 'z123046@shibaura-it.ac.jp',
+                'name' => 'user1',
+                'email' => 'z123048@shibaura-it.ac.jp',
                 'password' => bcrypt('user'),
                 'gender' => 'male',
+                'glc_verified' => true,
                 'date_of_birth' => '1999-01-01',
             ],
             [
-                'name' => 'z123047',
+                'name' => 'user2',
                 'email' => 'z123047@shibaura-it.ac.jp',
                 'password' => bcrypt('user'),
                 'gender' => 'female',

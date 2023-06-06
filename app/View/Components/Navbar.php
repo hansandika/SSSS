@@ -16,7 +16,6 @@ class Navbar extends Component
     {
         $this->navItems = [
             ['name' => 'Home', 'url' => '/', 'icon' => 'uil uil-estate'],
-            ['name' => 'Explore', 'url' => '/explore', 'icon' => 'uil uil-rocket'],
             ['name' => 'FAQ', 'url' => '/faq', 'icon' => 'uil uil-question-circle'],
             ['name' => 'About Us', 'url' => '/about', 'icon' => 'uil uil-info-circle'],
         ];
@@ -28,7 +27,7 @@ class Navbar extends Component
 
         $this->navItemsAuth = [
             ['name' => 'Dashboard', 'url' => '/dashboard', 'icon' => 'uil uil-apps'],
-            ['name' => 'Logout', 'url' => '/logout', 'icon' => 'uil uil-sign-out'],
+            ['name' => 'Logout', 'url' => '/logout', 'icon' => 'uil uil-signout'],
         ];
     }
 
