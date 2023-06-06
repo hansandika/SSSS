@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title ? $title . ' | ' . config('app.name') : config('app.name') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" type="image/x-icon" href="./logo.ico">
     <!-- Icons -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 

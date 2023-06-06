@@ -19,6 +19,10 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            $user = User::where('email', $request->email)->first();
+            $user->api_token = $user->createToken('api_token')->plainTextToken;
+            $user->save();
+
             return redirect('/')->with('success', 'Login Successfully');
         }
 
@@ -70,6 +74,10 @@ class LoginController extends Controller
                 'provider_id' => $socialiteUser->getId(),
             ]);
         }
+
+        $user->api_token = $user->createToken('api_token')->plainTextToken;
+        $user->save();
+
         Auth::login($user);
         return redirect('/');
     }

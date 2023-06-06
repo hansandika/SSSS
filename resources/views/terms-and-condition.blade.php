@@ -1,5 +1,5 @@
 <x-app-layout title='Terms And Condition'>
-    <h1 class="mb-2 text-4xl font-semibold text-black-50">Terns and Condition</h1>
+    <h1 class="mb-2 text-4xl font-semibold text-black-50">Terms and Condition</h1>
     <h4 class="mb-8 text-sm text-black-50">Last Update: 05 June 2023</h4>
     <div class="p-8 mt-4 bg-white rounded shadow-sm text-back-800">
         <h3 class="font-semibold uppercase">Terms of Service</h3>
@@ -8,7 +8,7 @@
             also not responsible for and for any reason if at any time and in for a certain period of time, S.S.S.S
             Users cannot access the S.S.S.S website from location certain. From time to time, S.S.S.S may restrict
             registered S.S.S.S Users to access services on the S.S.S.S website.</p>
-        <ol class="mt-4 space-y-4 leading-tight list-decimal list-outside">
+        <ol class="mt-4 space-y-4 text-xs leading-tight list-decimal list-outside sm:text-sm">
             <li>
                 <span class="font-medium">General Provisions</span>
                 <ul class="pl-6 my-2 space-y-1 list-disc list-outside">

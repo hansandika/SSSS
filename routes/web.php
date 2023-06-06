@@ -25,7 +25,6 @@ Route::get("/auth/{provider}/callback", [Auth\LoginController::class, 'providerC
 
 Route::get("/logout", [Auth\LoginController::class, "logout"])->name("logout");
 
-
 Route::get("/posts/create", [PostController::class, "create"])->name("posts.create");
 Route::post("/posts", [PostController::class, "store"])->name("posts.store");
 Route::get("/posts/{slug}", [PostController::class, "show"])->name("posts.show");

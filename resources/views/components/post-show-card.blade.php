@@ -1,4 +1,4 @@
-<div class="flex flex-col items-start p-4 space-y-4 bg-white rounded shadow-sm basis-full md:basis-3/4">
+<div class="flex flex-col items-start p-4 space-y-4 bg-white rounded shadow-sm md:p-8 basis-full md:basis-3/4">
     <div class="space-y-2">
         <h1 class="text-lg font-semibold text-black-700">{{ $post->title }}</h1>
         <span class="block text-sm font-extralight">{{ $post->created_at->diffForHumans() }}</span>
@@ -29,7 +29,7 @@
 
 
     @forelse($post->comments as $comment)
-        <div class="flex flex-col items-start space-y-6">
+        <div class="flex flex-col items-start w-full space-y-6">
             <x-comment-card :comment="$comment" />
         </div>
     @empty
@@ -57,4 +57,78 @@
         this.style.height = 'auto';
         this.style.height = this.scrollHeight + 'px';
     }
+
+    function toggleLike() {
+        let like = document.querySelectorAll('.comment-like');
+        let dislike = document.querySelectorAll('.comment-dislike');
+
+        const LIKE_TYPE = 1;
+        const DISLIKE_TYPE = 0;
+
+        async function updateCommentStatus(url = "", data = {}) {
+            const response = await fetch(url, {
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer {{ Auth::user()->api_token }}",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify(data)
+            })
+            return response.json();
+        };
+
+        like.forEach(element => {
+            element.addEventListener('click', function() {
+                const commentLikeCount = element.querySelector('.comment-like-count');
+                const commentLikeIcon = element.querySelector('.like-icon');
+
+                const commentId = element.parentElement.parentElement.dataset.commentId;;
+                updateCommentStatus('/api/likes', {
+                    comment_id: commentId,
+                    like_type: LIKE_TYPE
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    console.log(error);
+                });
+
+
+                if (element.classList.contains('bg-green-200')) {
+                    commentLikeCount.textContent = parseInt(commentLikeCount.textContent) - 1;
+                } else {
+                    commentLikeCount.textContent = parseInt(commentLikeCount.textContent) + 1;
+                }
+
+                element.classList.toggle('bg-green-200');
+                element.classList.toggle('hover:bg-green-50');
+
+                commentLikeCount.classList.toggle('text-green-600');
+                commentLikeIcon.classList.toggle('stroke-green-600');
+            });
+        });
+
+        dislike.forEach(element => {
+            element.addEventListener('click', function() {
+                const commentDislikeCount = element.querySelector('.comment-dislike-count');
+                const commentDislikeIcon = element.querySelector('.dislike-icon');
+
+                if (element.classList.contains('bg-red-200')) {
+                    commentDislikeCount.textContent = parseInt(commentDislikeCount.textContent) - 1;
+                } else {
+                    commentDislikeCount.textContent = parseInt(commentDislikeCount.textContent) + 1;
+                }
+                element.classList.toggle('bg-red-200');
+                element.classList.toggle('hover:bg-red-50');
+
+                commentDislikeCount.classList.toggle('text-red-600');
+                commentDislikeIcon.classList.toggle('stroke-red-600');
+            });
+        });
+    }
+
+    toggleLike()
 </script>

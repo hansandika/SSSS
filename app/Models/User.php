@@ -23,7 +23,11 @@ class User extends Authenticatable
         'email',
         'password',
         'gender',
+        'glc_verified',
         'date_of_birth',
+        'role',
+        'provider',
+        'provider_id',
     ];
 
     /**
@@ -61,13 +65,13 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
-    public function getGenderAttribute(): string
+    public function getGenderAttribute(string $gender): string
     {
-        return ucfirst($this->gender);
+        return ucfirst($gender);
     }
 
-    public function getNameAttribute(): string
+    public function getNameAttribute(string $name): string
     {
-        return ucfirst($this->name ? $this->name : 'Anonymous');
+        return $name ? ucfirst($name) : 'Anonymous';
     }
 }

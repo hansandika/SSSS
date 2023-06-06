@@ -13,4 +13,7 @@
             {{ $posts->appends(Request::all())->links('pagination::tailwind') }}
         </div>
     </div>
+    @auth
+        <x-redirect-create-post />
+    @endauth
 </x-app-layout>

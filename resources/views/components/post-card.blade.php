@@ -1,12 +1,10 @@
 <div
     class="items-stretch w-full basis-full sm:basis-auto sm:w-[320px] p-6 bg-white border border-gray-200 rounded-lg shadow">
-    <a href="#">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2">{{ $post->title }}</h5>
-    </a>
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2">{{ $post->title }}</h5>
     <p class="mb-3 font-normal text-gray-700 line-clamp-3">{{ $post->content }}</p>
     <x-tag-button :tag="$post->category->name" />
     <div class="w-full h-0.5 bg-black-300 bg-opacity-25 my-2"></div>
-    <div class="flex flex-wrap items-center justify-between gap-4 sm:gap-2">
+    <div class="flex flex-wrap items-center justify-between gap-4 sm:gap-0">
         <x-post-status :likesCount="$post->likesCount" :dislikesCount="$post->dislikesCount" :commentsCount="$post->commentsCount" isLiked="$post->isLiked"
             isDisliked="$post->isDisliked" />
         <a href="{{ route('posts.show', $post->slug) }}"
