@@ -52,6 +52,16 @@ class Post extends Model
         return $this->likes->where('user_id', auth()->user()->id)->where('type', '0')->count() === 1;
     }
 
+    public function likedBy(User $user): bool
+    {
+        return $this->likes->where('user_id', $user->id)->where('type', 1)->count() > 0;
+    }
+
+    public function dislikedBy(User $user): bool
+    {
+        return $this->likes->where('user_id', $user->id)->where('type', 0)->count() > 0;
+    }
+
     public function getCommentsCountAttribute(): int
     {
         return $this->comments->count();

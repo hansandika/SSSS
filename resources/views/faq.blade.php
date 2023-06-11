@@ -3,8 +3,7 @@
     <h4 class="mb-8 text-sm text-black-50">Here as some questions that frequently asked. These Information were
         provided
         by GLC Member which can be trusted.</h4>
-    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white text-black-700"
-        data-inactive-classes="text-black-50">
+    <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-black-700">
         @foreach ($listFaq as $idx => $faq)
             <x-faq-item :question="$faq['question']" :answer="$faq['answer']" :idx="$idx" />
         @endforeach

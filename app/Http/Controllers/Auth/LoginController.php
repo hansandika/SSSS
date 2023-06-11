@@ -7,10 +7,17 @@ use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use App\Helper\RenewTokenSession;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth'])->only(['logout']);
+    }
+
     public function index()
     {
         return view('auth.login');
@@ -19,28 +26,31 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            $user = User::where('email', $request->email)->first();
-            $user->api_token = $user->createToken('api_token')->plainTextToken;
-            $user->save();
-
+            RenewTokenSession::refreshToken($request);
             return redirect('/')->with('success', 'Login Successfully');
         }
 
         return redirect('/login')->with('error', 'Invalid Credential');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+        Session()->flush();
+
+        $request->user()->forceFill([
+            'api_token' => null,
+        ])->save();
+
         Auth::logout();
-        return redirect('/')->with('success', 'Logout Successfully');;
+        return redirect('/')->with('success', 'Logout Successfully');
     }
 
     public function providerLogin($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->with(["prompt" => "select_account"])->redirect();
     }
 
-    public function providerCallback($provider)
+    public function providerCallback($provider, Request $request)
     {
         try {
             $socialiteUser = Socialite::driver($provider)->user();
@@ -75,10 +85,8 @@ class LoginController extends Controller
             ]);
         }
 
-        $user->api_token = $user->createToken('api_token')->plainTextToken;
-        $user->save();
-
         Auth::login($user);
-        return redirect('/');
+        RenewTokenSession::refreshToken($request);
+        return redirect('/')->with('success', 'Login Successfully');
     }
 }

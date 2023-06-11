@@ -1,7 +1,7 @@
-<div class="flex flex-col items-start w-full p-4 space-y-2 rounded shadow-sm bg-black-50"
+<div {{ $attributes->merge(['class' => 'flex flex-col items-start w-full p-4 space-y-2 rounded']) }}
     data-comment-id="{{ $comment->id }}">
     <div class="flex items-center space-x-4">
-        <span class="text-lg font-semibold text-blue-700">{{ $comment->user->name }}</span>
+        <span class="text-lg font-semibold text-blue-700">{{ $comment->author }}</span>
         @if ($comment->user->glc_verified)
             <span class="flex items-center text-sm text-nature">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -11,10 +11,18 @@
                 </svg>
                 GLC Verified
             </span>
-            <span class="text-sm font-extralight">{{ $comment->updated_at->diffForHumans() }}</span>
         @endif
+        <span class="text-sm font-extralight">{{ $comment->updated_at->diffForHumans() }}</span>
     </div>
     <p class="text-xs leading-loose sm:text-sm">{{ $comment->content }}
     </p>
-    <x-comment-status :likesCount="$comment->likes_count" :dislikesCount="$comment->dislikes_count" :isLiked="$comment->likedBy(Auth::user())" :isDisliked="$comment->dislikedBy(Auth::user())" />
+    <x-comment-status :likesCount="$comment->likes_count" :dislikesCount="$comment->dislikes_count"
+        isLiked="{{ Auth::check() ? $comment->likedBy(Auth::user()) : false }}"
+        isDisliked="{{ Auth::check() ? $comment->dislikedBy(Auth::user()) : false }}" :postSlug="$comment->post->slug"
+        :parentId="$parentId" />
+    @foreach ($comment->replies as $reply)
+        <div class="w-full ml-2">
+            <x-comment-card :comment="$reply" />
+        </div>
+    @endforeach
 </div>

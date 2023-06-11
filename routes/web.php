@@ -11,8 +11,12 @@ if (App::environment('production')) {
 }
 
 Route::get("/", HomeController::class)->name("home");
-Route::get("/about", AboutUsController::class)->name("about-us");
+Route::get("/about", AboutController::class)->name("about");
 Route::get("/faq", FAQController::class)->name("faq");
+
+Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+Route::get('/settings', [UserController::class, 'settings'])->name('settings');
+Route::patch('/settings', [UserController::class, 'update'])->name('settings.update');
 
 Route::get("/login", [Auth\LoginController::class, "index"])->name("show.login");
 Route::post("/login", [Auth\LoginController::class, "login"])->name("login");

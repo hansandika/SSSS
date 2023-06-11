@@ -23,6 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'gender',
+        'biography',
+        'avatar',
         'glc_verified',
         'date_of_birth',
         'role',
@@ -60,6 +62,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function getLatestCommentAttribute()
+    {
+        return $this->comments()->latest()->first();
+    }
+
     public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
@@ -70,8 +77,40 @@ class User extends Authenticatable
         return ucfirst($gender);
     }
 
-    public function getNameAttribute(string $name): string
+    public function getUserNameAttribute()
     {
-        return $name ? ucfirst($name) : 'Anonymous';
+        return $this->name ? ucfirst($this->name) : 'Anonymous';
+    }
+
+    public function getFirstNameAttribute(): string
+    {
+        return $this->user_name[0];
+    }
+
+    public function isAuthor(Post $post): bool
+    {
+        return $this->id === $post->user_id;
+    }
+
+
+    public function getPostsCountAttribute(): int
+    {
+        return $this->posts()->count();
+    }
+
+    public function getCommentsCountAttribute(): int
+    {
+        return $this->comments()->count();
+    }
+
+    public function getImageAttribute(): string
+    {
+        return $this->avatar ? asset('/storage/profile-image/' . $this->avatar) : asset('blank-profile.svg');
+    }
+
+    // Check if user can post comment
+    public function canUserPostComment($data)
+    {
+        return $data['latestCommentCreated']->diffInSeconds() > config('global.USER_COMMENT_DELAY');
     }
 }

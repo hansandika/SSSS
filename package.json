@@ -15,6 +15,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@iconscout/unicons": "^4.0.8",
         "flowbite-datepicker": "^1.2.2"
     }
 }

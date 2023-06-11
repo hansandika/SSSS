@@ -62,6 +62,16 @@ class FAQSeeder extends Seeder
 
                 5. Events
                 A variety of events and activities are planned and held on regular basis. It is a great opportunity for you to get involved and learn about different cultures while having fun!'
+            ],
+            [
+                'question' => 'How does commuter pass work in Japan?',
+                'answer' => "A commuter pass allows you unlimited travel between two designated stations or designated routes.
+
+                The information regarding you commuter pass will be printed on your card, for example the route (between which stations), the validity period as well as your name.
+                
+                For students, you could buy student's commuter pass after receiving your student ID. The commuter pass will provide FOC transport between the university and your accommodation address.
+                
+                You can buy a commuter pass for 1 month, 3 months and 6 months and it will be saved either on an existing or a new IC card like Suica or PASMO. You can charge these IC cards with additional money if you for example take other routes that are not covered by your commuter pass and can only use this one card for public transport."
             ]
         ];
 

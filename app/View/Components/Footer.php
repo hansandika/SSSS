@@ -14,7 +14,7 @@ class Footer extends Component
     {
         $this->footerItems = [
             ['name' => 'FAQ', 'url' => '/faq', 'icon' => 'uil uil-question-circle'],
-            ['name' => 'About Us', 'url' => '/about', 'icon' => 'uil uil-info-circle'],
+            ['name' => 'About', 'url' => '/about', 'icon' => 'uil uil-info-circle'],
             ['name' => 'Terms & Conditions', 'url' => '/terms-and-condition', 'icon' => 'uil uil-file-alt']
         ];
     }

@@ -16,14 +16,13 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $attr = $request;
+        $attr = $request->validated();
 
         if (explode("@", $attr['email'])[1] !== 'shibaura-it.ac.jp') {
             return redirect()->to('/')->with('error', 'You must use Shibaura Institute of Technology email address');
         }
 
-        $attr['date_of_birth'] = date('Y-m-d', strtotime($attr['dob']));
-        $attr['name'] = substr($request->email, 0, strpos($request->email, '@'));
+        $attr['date_of_birth'] = date('Y-m-d', strtotime($attr['date_of_birth']));
         $attr['password'] = bcrypt($attr['password']);
 
         User::create($attr);

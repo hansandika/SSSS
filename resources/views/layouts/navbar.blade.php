@@ -11,7 +11,7 @@
                 @foreach ($navItems as $navItem)
                     <li>
                         <a href={{ $navItem['url'] }}
-                            class="flex flex-col items-center font-medium transition text-black-700 hover:text-nature">
+                            class="flex flex-col items-center font-medium transition  hover:text-nature {{ strcasecmp($navItem['name'], Route::current()->getName()) === 0 ? 'text-green-700' : 'text-black-700' }}">
                             <i class="text-lg {{ $navItem['icon'] }} md:hidden"></i>
                             {{ $navItem['name'] }}
                         </a>
@@ -61,6 +61,39 @@
                 @endforeach
             </div>
         @endguest
+
+        @auth
+            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
+                class="flex items-center justify-between w-full p-2 text-gray-900 transition rounded cursor-pointer md:border-0 md:w-auto hover:bg-gray-300"
+                data-dropdown-placement="bottom">
+                <span class="px-4 py-1.5 font-semibold text-white rounded bg-black-400">
+                    {{ Auth::user()->first_name }}
+                </span>
+            </button>
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow">
+                <div class="px-4 py-3 text-sm text-gray-900">
+                    <div>{{ Auth::user()->user_name }}</div>
+                    <div class="font-medium truncate">{{ Auth::user()->email }}</div>
+                </div>
+                <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
+                    @foreach ($navItemsAuth as $navItem)
+                        <li class="group">
+                            <a href="{{ $navItem['url'] }}" class="block px-4 py-2 group-hover:bg-gray-100">
+                                <div class="flex items-center space-x-4">
+                                    <i class="{{ $navItem['icon'] }}"></i>
+                                    <div class="flex flex-col space-y-1">
+                                        <span
+                                            class="block text-sm font-medium text-black-700 group-hover:text-green-800">{{ $navItem['desktopName'] }}</span>
+                                        <span class="block text-sm text-black-300">{{ $navItem['description'] }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endauth
 
         <!-- Nav Toggle For smartphone -->
         <div class="text-lg font-medium cursor-pointer text-black-700 hover:text-earth md:hidden" id="nav-toggle">

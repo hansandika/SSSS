@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiTokenController;
 use App\Http\Controllers\Api\LikeController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/likes', [LikeController::class, 'index'])->name('likes.index');
+Route::put("/api_token", [ApiTokenController::class, 'update'])->name('api_token.update');
 
-Route::middleware('auth:api')->post('/likes', [LikeController::class, 'store'])->name('likes.store');
+Route::post('/comment-likes', [LikeController::class, 'updateCommentLike'])->name('likes.update');
+Route::post('/post-likes', [LikeController::class, 'updatePostLike'])->name('likes.update');

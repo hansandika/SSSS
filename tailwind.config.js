@@ -5,6 +5,7 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
         "./node_modules/flowbite/**/*.js",
+        "./node_modules/@iconscout/unicons/css/line.css",
     ],
     darkMode: false,
     theme: {

@@ -4,34 +4,41 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class LikeController extends Controller
 {
 
-    public function index()
+    public function __construct()
     {
-        $user = Auth::user();
-        if (Auth::guard('api')->check()) {
-            return response()->json(['authenticated' => true, 'user' => $user]);
-        }
-
-        return response()->json(['authenticated' => false, 'user' => $user]);
+        $this->middleware('auth:api');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function createLike(int $likeType, int $user_id): Like
     {
-        $user = Auth::user();
-        if (Auth::guard('api')->check()) {
-            return response()->json(['authenticated' => true, 'user' => $user]);
+        $like = new Like();
+        $like->user_id = $user_id;
+        $like->type = $likeType;
+        return $like;
+    }
+
+    public function updateCommentLike(Request $request)
+    {
+        if ($request->comment_id === null) {
+            return response()->json([
+                'message' => 'Comment ID is required'
+            ])->setStatusCode(400);
         }
 
-        return response()->json(['authenticated' => auth('api')->check(), 'user' => $user]);
-
+        if ($request->like_type === null) {
+            return response()->json([
+                'message' => 'Like Type is required'
+            ])->setStatusCode(400);
+        }
 
         $comment = Comment::find($request->comment_id);
         if (!$comment) {
@@ -40,23 +47,9 @@ class LikeController extends Controller
             ])->setStatusCode(404);
         }
 
-        if (!$request->like_type) {
-            return response()->json([
-                'message' => 'Like Type is required'
-            ]);
-        }
-
-        return response()->json([
-            'message' => 'Test donag',
-        ]);
         $likeType = (int)$request->like_type;
-        $user_id = auth('api')->user()->id;
-        return response()->json([
-            'message' => 'Test donag',
-            'user' => $user_id
-        ]);
-
-
+        $user = Auth::user();
+        $user_id = $user->id;
 
         if ($likeType !== 0 && $likeType !== 1) {
             return response()->json([
@@ -65,65 +58,104 @@ class LikeController extends Controller
         }
 
         if ($likeType === 0) {
-            if ($comment->dislikeBy($user_id)) {
-                $comment->likes()->where('user_id', $user_id)->delete();
+            if ($comment->dislikedBy($user)) {
+                $comment->likes()->where('user_id', $user_id)->where('type', $likeType)->delete();
                 return response()->json([
-                    'message' => 'Dislike deleted'
+                    'message' => 'Comment dislike deleted'
                 ])->setStatusCode(200);
             }
 
-            $comment->likes()->create([
-                'user_id' => $user_id,
-                'type' => 0
-            ]);
+            $like = $this->createLike($likeType, $user_id);
+            $comment->likes()->save($like);
 
             return response()->json([
-                'message' => 'Dislike created'
+                'message' => 'Comment dislike created'
             ])->setStatusCode(201);
         } else if ($likeType === 1) {
-            return response()->json([
-                'message' => 'Test donag',
-                'user_id' => $user_id
-            ]);
-            if ($comment->likeBy($user_id)) {
-                $comment->likes()->where('user_id', $user_id)->delete();
+            if ($comment->likedBy($user)) {
+                $comment->likes()->where('user_id', $user_id)->where('type', $likeType)->delete();
                 return response()->json([
-                    'message' => 'Like deleted'
+                    'message' => 'Comment like deleted'
                 ])->setStatusCode(200);
             }
 
-            $comment->likes()->create([
-                'user_id' => $user_id,
-                'type' => 1
-            ]);
+            $like = $this->createLike($likeType, $user_id);
+
+            $comment->likes()->save($like);
 
             return response()->json([
-                'message' => 'Like created'
+                'message' => 'Comment like created'
             ])->setStatusCode(201);
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function updatePostLike(Request $request)
     {
-        //
-    }
+        return response()->json([
+            'message' => 'Not Implemented'
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if ($request->post_slug === null || $request->post_slug === "") {
+            return response()->json([
+                'message' => 'Post slug is required'
+            ])->setStatusCode(400);
+        }
+
+        if ($request->like_type === null) {
+            return response()->json([
+                'message' => 'Like Type is required'
+            ])->setStatusCode(400);
+        }
+
+
+
+        $likeType = (int)$request->like_type;
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        if ($likeType !== 0 && $likeType !== 1) {
+            return response()->json([
+                'message' => 'Invalid type'
+            ])->setStatusCode(400);
+        }
+
+        $post = Post::where('slug', $request->post_slug)->first();
+        if (!$post) {
+            return response()->json([
+                'message' => 'Post not found'
+            ])->setStatusCode(404);
+        }
+
+        if ($likeType === 0) {
+            if ($post->dislikedBy($user)) {
+                $post->likes()->where('user_id', $user_id)->where('type', $likeType)->delete();
+                return response()->json([
+                    'message' => 'Post dislike deleted'
+                ])->setStatusCode(200);
+            }
+
+            $like = $this->createLike($likeType, $user_id);
+            $post->likes()->save($like);
+
+            return response()->json([
+                'message' => 'Post dislike created'
+            ])->setStatusCode(201);
+        } else if ($likeType === 1) {
+            if ($post->likedBy($user)) {
+                $post->likes()->where('user_id', $user_id)->where('type', $likeType)->delete();
+                return response()->json([
+                    'message' => 'Post like deleted'
+                ])->setStatusCode(200);
+            }
+
+            $like = $this->createLike($likeType, $user_id);
+
+            $post->likes()->save($like);
+
+            return response()->json([
+                'message' => 'Post like created'
+            ])->setStatusCode(201);
+        }
     }
 }

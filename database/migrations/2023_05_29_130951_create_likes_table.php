@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('likeable_type');
             $table->tinyInteger('type'); // 0 = dislike, 1 = like
             $table->timestamps();
+
+            $table->unique(['user_id', 'likeable_id', 'likeable_type', 'type']);
         });
     }
 

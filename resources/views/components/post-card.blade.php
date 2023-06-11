@@ -1,12 +1,12 @@
-<div
-    class="items-stretch w-full basis-full sm:basis-auto sm:w-[320px] p-6 bg-white border border-gray-200 rounded-lg shadow">
+<div class="self-stretch h-auto w-full basis-full sm:basis-auto sm:w-[320px] p-6 bg-white border border-gray-200 rounded-lg shadow max-h-[350px]"
+    data-post-slug="{{ $post->slug }}">
     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2">{{ $post->title }}</h5>
     <p class="mb-3 font-normal text-gray-700 line-clamp-3">{{ $post->content }}</p>
     <x-tag-button :tag="$post->category->name" />
-    <div class="w-full h-0.5 bg-black-300 bg-opacity-25 my-2"></div>
-    <div class="flex flex-wrap items-center justify-between gap-4 sm:gap-0">
-        <x-post-status :likesCount="$post->likesCount" :dislikesCount="$post->dislikesCount" :commentsCount="$post->commentsCount" isLiked="$post->isLiked"
-            isDisliked="$post->isDisliked" />
+    <hr class="w-full h-0.5 bg-black-300 bg-opacity-25 my-2" />
+    <div class="flex flex-wrap items-center justify-between gap-4 sm:gap-2">
+        <x-post-status :likesCount="$post->likesCount" :dislikesCount="$post->dislikesCount" :commentsCount="$post->commentsCount" isLiked="{{ $post->isLiked }}"
+            isDisliked="{{ $post->isDisliked }}" />
         <a href="{{ route('posts.show', $post->slug) }}"
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg cursor-pointer hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
             Read more

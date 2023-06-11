@@ -1,8 +1,11 @@
-<form action="{{ route('comments.store') }}" class="w-full" method="POST">
+<form action="{{ route('comments.store') }}" method="POST" {{ $attributes->merge(['class' => 'w-full rounded-lg']) }}>
     @csrf
     <input type="hidden" name="post_slug" value="{{ $postSlug }}" />
+    @if ($parentId)
+        <input type="hidden" name="parent_id" value="{{ $parentId }}" />
+    @endif
     <label for="chat" class="sr-only">Your message</label>
-    <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+    <div class="flex items-center ">
         <textarea id="chat" rows="1" name="content"
             class="overflow-hidden resize-none block mr-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Your message..."></textarea>
