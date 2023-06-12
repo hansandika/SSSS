@@ -26,8 +26,8 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $validated = $request->validated();
-        $isContentSafe = Util::validateSafeContent($validated['content']);
         $category = Util::getCategoryByPostContent($validated['content']);
+        $isContentSafe = Util::validateSafeContent($validated['content']);
         if (!$isContentSafe) {
             return redirect()->back()->withErrors(['content' => 'Your comment contains inappropriate language. Please moderate your language.']);
         }
@@ -69,7 +69,12 @@ class PostController extends Controller
         $this->authorize('update', $post);
 
         $validated = $request->validated();
-        $category = $this->getCategoryByPostContent($validated['content']);
+        $category = Util::getCategoryByPostContent($validated['content']);
+        $isContentSafe = Util::validateSafeContent($validated['content']);
+        if (!$isContentSafe) {
+            return redirect()->back()->withErrors(['content' => 'Your comment contains inappropriate language. Please moderate your language.']);
+        }
+
         $category_id = Category::where('name', $category)->first()->id;
 
         $validated['category_id'] = $category_id;

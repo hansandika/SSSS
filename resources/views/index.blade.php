@@ -4,7 +4,7 @@
         <div class="md:basis-1/4">
             <x-filter-card :categories="$categories" />
         </div>
-        <div class="flex flex-wrap items-stretch gap-4 content-stretch md:basis-3/4">
+        <div class="flex flex-wrap items-stretch gap-4 content-stretch md:basis-3/4 min-h-[580px]">
             @forelse ($posts as $post)
                 <x-post-card :post="$post" />
             @empty
