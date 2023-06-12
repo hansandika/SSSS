@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::put("/api_token", [ApiTokenController::class, 'update'])->name('api_token.update');
 
-Route::post('/comment-likes', [LikeController::class, 'updateCommentLike'])->name('likes.update');
+Route::post('/comment-likes', [LikeController::class, 'updateCommentLike'])->name('comments.update');
 Route::post('/post-likes', [LikeController::class, 'updatePostLike'])->name('likes.update');
