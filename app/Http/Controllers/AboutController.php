@@ -16,7 +16,7 @@ class AboutController extends Controller
             ['name' => 'Edo', 'image' => 'edo.jpg', 'role' => 'Founder'],
             ['name' => 'Dary', 'image' => 'dary.jpg', 'role' => 'Founder'],
             ['name' => 'Yu', 'image' => 'yu.jpg', 'role' => 'Founder'],
-            ['name' => 'Okabe', 'image' => 'edo.jpg', 'role' => 'Founder'],
+            ['name' => 'Okabe', 'image' => 'okabe.jpg', 'role' => 'Founder'],
         ];
         return view('about', ['listMembers' => $listMembers]);
     }

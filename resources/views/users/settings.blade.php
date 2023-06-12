@@ -88,9 +88,9 @@
             </div>
             <div class="flex flex-col items-start gap-4 md:items-center md:flex-row">
                 <label class="text-black-700 w-44">Avatar</label>
-                <div class="flex items-center justify-center flex-1 w-full">
-                    <label for="dropzone-file"
-                        class="flex flex-col items-start justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer h-52 md:h-64 md:items-center bg-gray-50">
+                <div class="relative flex items-center justify-center flex-1 w-full">
+                    <label for="file-upload"
+                        class="relative flex flex-col items-start justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer h-52 md:h-64 md:items-center bg-gray-50">
                         <div class="flex flex-col items-start justify-center pt-5 pb-6 md:items-center">
                             <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +106,8 @@
                             <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)
                             </p>
                         </div>
-                        <input id="dropzone-file" type="file" class="hidden" name="avatar"
+                        <input id="file-upload" type="file"
+                            class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" name="avatar"
                             accept="image/png, image/gif, image/jpeg, image/svg, image/jpg" />
                     </label>
                 </div>

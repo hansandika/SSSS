@@ -1,6 +1,6 @@
-<div class="self-stretch h-auto w-full basis-full sm:basis-auto sm:w-[320px] p-6 bg-white border border-gray-200 rounded-lg shadow max-h-[350px]"
+<div class="self-stretch h-auto w-full basis-full sm:basis-auto sm:w-[320px] p-6 bg-white border border-gray-200 rounded-lg shadow max-h-[330px]"
     data-post-slug="{{ $post->slug }}">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2">{{ $post->title }}</h5>
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-1">{{ $post->title }}</h5>
     <p class="mb-3 font-normal text-gray-700 line-clamp-3">{{ $post->content }}</p>
     <x-tag-button :tag="$post->category->name" />
     <hr class="w-full h-0.5 bg-black-300 bg-opacity-25 my-2" />

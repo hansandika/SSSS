@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Util;
 use App\Http\Requests\CommentRequest;
 use App\Inspections\Spam;
 use App\Models\Comment;
@@ -16,9 +17,16 @@ class CommentController extends Controller
         try {
             resolve(Spam::class)->detect(request('content'));
 
+            $isContentSafe = Util::validateSafeContent($request->content);
+            if (!$isContentSafe) {
+                return redirect()->back()->withErrors(['content' => 'Your comment contains inappropriate language. Please moderate your language.']);
+            }
+
             $post = Post::where('slug', $request->post_slug)->first();
+
             $comment = new Comment();
             $comment->content = $request->content;
+
             $comment->user_id = Auth::id();
             $comment->post_id = $post->id;
             if ($request->parent_id) {
