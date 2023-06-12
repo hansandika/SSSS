@@ -11,7 +11,7 @@
                 @foreach ($navItems as $navItem)
                     <li>
                         <a href={{ $navItem['url'] }}
-                            class="flex flex-col items-center font-medium transition  hover:text-nature {{ strcasecmp($navItem['name'], Route::current()->getName()) === 0 ? 'text-green-700' : 'text-black-700' }}">
+                            class="text-sm md:text-base flex flex-col items-center font-medium transition  hover:text-nature {{ strcasecmp($navItem['name'], Route::current()->getName()) === 0 ? 'text-green-700' : 'text-black-700' }}">
                             <i class="text-lg {{ $navItem['icon'] }} md:hidden"></i>
                             {{ $navItem['name'] }}
                         </a>
@@ -21,7 +21,7 @@
                     @foreach ($navItemsNotAuth as $navItem)
                         <li class="md:hidden">
                             <a href={{ $navItem['url'] }}
-                                class="flex flex-col items-center font-medium transition text-black-700 hover:text-nature">
+                                class="flex flex-col items-center text-sm font-medium transition md:text-base text-black-700 hover:text-nature">
                                 <i class="text-lg {{ $navItem['icon'] }} md:hidden"></i>
                                 {{ $navItem['name'] }}
                             </a>
@@ -32,7 +32,7 @@
                     @foreach ($navItemsAuth as $navItem)
                         <li class="md:hidden">
                             <a href={{ $navItem['url'] }}
-                                class="flex flex-col items-center font-medium transition text-black-700 hover:text-blue-600">
+                                class="flex flex-col items-center text-sm font-medium transition md:text-base text-black-700 hover:text-blue-600">
                                 <i class="text-lg {{ $navItem['icon'] }} md:hidden"></i>
                                 {{ $navItem['name'] }}
                             </a>
@@ -64,7 +64,7 @@
 
         @auth
             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
-                class="flex items-center justify-between w-full p-2 text-gray-900 transition rounded cursor-pointer md:border-0 md:w-auto hover:bg-gray-300"
+                class="items-center justify-between hidden w-full p-2 text-gray-900 transition rounded cursor-pointer md:flex md:border-0 md:w-auto hover:bg-gray-300"
                 data-dropdown-placement="bottom">
                 <span class="px-4 py-1.5 font-semibold text-white rounded bg-black-400">
                     {{ Auth::user()->first_name }}

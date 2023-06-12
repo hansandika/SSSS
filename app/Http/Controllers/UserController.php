@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -31,9 +32,6 @@ class UserController extends Controller
         $validated['date_of_birth'] = date('Y-m-d', strtotime($validated['date_of_birth']));
         $user = auth()->user();
 
-        if ($request->hasFile('avatar')) {
-            return $request->file('avatar');
-        }
         if ($request->file('avatar')) {
             if ($user->avatar) {
                 Storage::delete('public/profile-image/' . $user->avatar);

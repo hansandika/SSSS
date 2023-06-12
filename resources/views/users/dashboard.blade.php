@@ -1,11 +1,11 @@
 <x-app-layout title='{{ $user->user_name }} Dashboard'>
-    <div class="p-8 bg-white rounded shadow">
+    <div class="p-4 bg-white rounded shadow md:p-8 sm:px-4">
         <div class="flex flex-col justify-between gap-8 item-start md:flex-row">
             <div class="basis-full md:basis-1/4">
                 <img src="{{ $user->image }}" alt="profile-image" class="object-cover rounded-lg aspect-square">
             </div>
             <div class="flex flex-col basis-full md:basis-3/4 gap-y-4 md:gap-y-2">
-                <div class="flex flex-col pt-2 grap-y-2">
+                <div class="flex flex-col pt-2 gap-y-2">
                     <h1 class="text-lg font-semibold text-black-700">{{ $user->user_name }}</h1>
                     <span class="block text-sm text-black-400">{{ $user->email }}</span>
                 </div>
@@ -29,8 +29,8 @@
                 </p>
             </div>
         </div>
-        <hr class="h-px my-8 bg-gray-200 border-0">
-        <div class="flex items-center gap-8">
+        <hr class="h-px my-4 bg-gray-200 border-0 md:my-8">
+        <div class="flex flex-wrap items-center gap-4 md:gap-8">
             <div class="flex items-center space-x-2">
                 <i class="text-4xl font-light text-black-300 uil uil-envelope-alt"></i>
                 <div class="flex flex-col items-start">

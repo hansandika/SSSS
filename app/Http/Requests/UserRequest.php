@@ -24,10 +24,10 @@ class UserRequest extends FormRequest
     {
         return [
             'date_of_birth' => ['date', 'before:today'],
-            'name' => ['max:255'],
-            'avatar' => ['image', 'max:2048', 'mimes:jpeg,png,jpg,gif,svg'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'avatar' => ['nullable', 'image', 'max:2048', 'mimes:jpeg,png,jpg,gif,svg'],
             'gender' => ['string', 'in:male,female,non-binary'],
-            'biography' => ['max:500', 'min:10'],
+            'biography' => ['nullable', 'max:500', 'min:10'],
         ];
     }
 }

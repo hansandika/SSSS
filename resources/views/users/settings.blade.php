@@ -88,7 +88,7 @@
             </div>
             <div class="flex flex-col items-start gap-4 md:items-center md:flex-row">
                 <label class="text-black-700 w-44">Avatar</label>
-                <div class="relative flex items-center justify-center flex-1 w-full">
+                <div class="relative flex items-center justify-start flex-1 w-full dropzone">
                     <label for="file-upload"
                         class="relative flex flex-col items-start justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer h-52 md:h-64 md:items-center bg-gray-50">
                         <div class="flex flex-col items-start justify-center pt-5 pb-6 md:items-center">
@@ -110,6 +110,14 @@
                             class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" name="avatar"
                             accept="image/png, image/gif, image/jpeg, image/svg, image/jpg" />
                     </label>
+                    <div class="relative hidden">
+                        <img src="{{ asset('images/hans.jpg') }}"
+                            class="object-cover w-64 h-64 rounded-lg shadow-md aspect-square" alt="img-preview"
+                            id="img-preview">
+                        <button
+                            class="absolute px-4 py-2 font-semibold text-white transition bg-red-600 rounded-full hover:bg-red-800 right-4 top-5"
+                            id="img-close-btn">x</button>
+                    </div>
                 </div>
             </div>
             <button type="submit"
@@ -117,4 +125,25 @@
                     class="mr-1 uil uil-save"></i> Save Changes</button>
         </form>
     </div>
+
+    <script>
+        const fileInput = document.querySelector('#file-upload');
+        const imageBtnClose = document.querySelector('#img-close-btn');
+        const imagePreview = document.querySelector('#img-preview');
+        fileInput.onchange = (event) => {
+            const [file] = fileInput.files;
+            const src = URL.createObjectURL(file);
+            imagePreview.src = src;
+            fileInput.parentElement.classList.add('hidden');
+            imagePreview.parentElement.classList.remove('hidden');
+        }
+
+        imageBtnClose.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            imagePreview.src = "";
+            fileInput.parentElement.classList.remove('hidden');
+            imagePreview.parentElement.classList.add('hidden');
+        })
+    </script>
 </x-app-layout>
