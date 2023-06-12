@@ -23,6 +23,13 @@
                         <span class="text-black-700 group-hover:text-green-700">Joined
                             {{ $user->created_at->format('d M, Y') }}</span>
                     </div>
+                    @if ($user->date_of_birth)
+                        <div class="text-sm transition cursor-pointer gap-x-1 group">
+                            <i class="font-semibold text-green-600 uil uil-gift"></i>
+                            <span class="text-black-700 group-hover:text-green-700">Date Of Birth
+                                {{ $user->date_of_birth->format('d M, Y') }}</span>
+                        </div>
+                    @endif
                 </div>
                 <p class="text-xs italic leading-loose text-black-400">
                     {{ $user->biography ?? 'No Description' }}

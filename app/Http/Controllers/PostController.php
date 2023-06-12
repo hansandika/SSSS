@@ -22,14 +22,13 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-
     public function store(PostRequest $request)
     {
         $validated = $request->validated();
         $category = Util::getCategoryByPostContent($validated['content']);
         $isContentSafe = Util::validateSafeContent($validated['content']);
         if (!$isContentSafe) {
-            return redirect()->back()->withErrors(['content' => 'Your comment contains inappropriate language. Please moderate your language.']);
+            return redirect()->back()->withErrors(['content' => 'Your post contains inappropriate language. Please moderate your language.']);
         }
 
         $category_id = Category::where('name', $category)->first()->id;
@@ -72,7 +71,7 @@ class PostController extends Controller
         $category = Util::getCategoryByPostContent($validated['content']);
         $isContentSafe = Util::validateSafeContent($validated['content']);
         if (!$isContentSafe) {
-            return redirect()->back()->withErrors(['content' => 'Your comment contains inappropriate language. Please moderate your language.']);
+            return redirect()->back()->withErrors(['content' => 'Your post contains inappropriate language. Please moderate your language.']);
         }
 
         $category_id = Category::where('name', $category)->first()->id;
