@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->string('api_token', 80)->unique()->nullable()->default(null);
-            $table->enum('gender', ['male', 'female', 'non-binary']);
+            $table->enum('gender', ['male', 'female', 'non-binary'])->default('male');
             $table->boolean('glc_verified')->default(false);
             $table->string('avatar')->nullable();
             $table->longText('biography')->nullable();
