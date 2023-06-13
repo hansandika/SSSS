@@ -40,7 +40,7 @@ class PostController extends Controller
 
         $post = Post::create($validated);
 
-        return redirect()->route('posts.show', $post->slug);
+        return redirect()->route('posts.show', $post->slug)->with('success', 'Post created');
     }
 
     public function show(Request $request, string $slug)
@@ -80,7 +80,7 @@ class PostController extends Controller
 
         $post->update($validated);
 
-        return redirect()->route('posts.show', $post->slug);
+        return redirect()->route('posts.show', $post->slug)->with('success', 'Post updated');
     }
 
     public function destroy(string $slug)
@@ -94,6 +94,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Post deleted');
     }
 }
