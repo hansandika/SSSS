@@ -91,11 +91,6 @@ class LikeController extends Controller
 
     public function updatePostLike(Request $request)
     {
-        return response()->json([
-            'message' => 'Not Implemented'
-        ]);
-
-
         if ($request->post_slug === null || $request->post_slug === "") {
             return response()->json([
                 'message' => 'Post slug is required'
