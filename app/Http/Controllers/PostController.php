@@ -47,7 +47,7 @@ class PostController extends Controller
     {
         $post = Post::where('slug', $slug)->with('category', 'likes', 'comments')->firstOrFail();
 
-        $popularPosts = Post::with("likes")->get()->sortByDesc(function ($post) {
+        $popularPosts = Post::with("likes")->where('id', '!=', $post->id)->get()->sortByDesc(function ($post) {
             return $post->likes->count();
         })->take(5);
 
