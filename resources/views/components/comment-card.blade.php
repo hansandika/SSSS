@@ -13,6 +13,12 @@
             </span>
         @endif
         <span class="text-sm font-extralight">{{ $comment->updated_at->diffForHumans() }}</span>
+        <p class="text-sm font-semibold text-yellow-300">
+            <i class="uil uil-favorite"></i>
+            <span id="user-rating">
+                {{ $comment->user->rating }}
+            </span>
+        </p>
     </div>
     <p class="text-xs leading-loose sm:text-sm">{{ $comment->content }}
     </p>

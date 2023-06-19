@@ -100,6 +100,8 @@
                     const commentLikeIcon = element.querySelector('.comment-like-icon');
                     const loadingIcon = element.querySelector('.loading-icon');
                     const commentId = element.parentElement.parentElement.dataset.commentId;
+                    const userRating = element.parentElement.parentElement.querySelector(
+                        '#user-rating');
 
                     const commentDislike = element.nextElementSibling;
                     const commentDislikeIcon = element.nextElementSibling.querySelector(
@@ -116,8 +118,9 @@
                         loadingIcon2.classList.remove('hidden');
                     }
 
+
                     if (commentDislike.classList.contains('bg-red-200')) {
-                        await Promise.all([
+                        const res = await Promise.all([
                             updateLikeStatus('/api/comment-likes', {
                                 comment_id: commentId,
                                 like_type: DISLIKE_TYPE
@@ -127,11 +130,18 @@
                                 like_type: LIKE_TYPE
                             })
                         ])
+                        const {
+                            user_rating
+                        } = res[1];
+                        userRating.textContent = user_rating;
                     } else {
-                        await updateLikeStatus('/api/comment-likes', {
+                        const {
+                            user_rating
+                        } = await updateLikeStatus('/api/comment-likes', {
                             comment_id: commentId,
                             like_type: LIKE_TYPE
                         })
+                        userRating.textContent = user_rating;
                     }
 
                     loadingIcon.classList.add('hidden');
@@ -193,6 +203,8 @@
                     const commentDislikeIcon = element.querySelector('.comment-dislike-icon');
                     const loadingIcon = element.querySelector('.loading-icon');
                     const commentId = element.parentElement.parentElement.dataset.commentId;
+                    const userRating = element.parentElement.parentElement.querySelector(
+                        '#user-rating');
 
                     const commentLike = element.previousElementSibling;
                     const commentLikeIcon = element.previousElementSibling.querySelector(
@@ -210,7 +222,7 @@
                     }
 
                     if (commentLike.classList.contains('bg-green-200')) {
-                        await Promise.all([
+                        const res = await Promise.all([
                             updateLikeStatus('/api/comment-likes', {
                                 comment_id: commentId,
                                 like_type: LIKE_TYPE
@@ -220,11 +232,18 @@
                                 like_type: DISLIKE_TYPE
                             })
                         ])
+                        const {
+                            user_rating
+                        } = res[1];
+                        userRating.textContent = user_rating;
                     } else {
-                        await updateLikeStatus('/api/comment-likes', {
+                        const {
+                            user_rating
+                        } = await updateLikeStatus('/api/comment-likes', {
                             comment_id: commentId,
                             like_type: DISLIKE_TYPE
                         })
+                        userRating.textContent = user_rating;
                     }
 
                     loadingIcon.classList.add('hidden');

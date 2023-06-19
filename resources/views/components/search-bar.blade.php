@@ -10,7 +10,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </div>
-            <input type="text" id="simple-search"
+            <input type="text" id="simple-search" name="search"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-nature focus:border-nature block w-full pl-10 p-2.5"
                 placeholder="Search" required>
         </div>

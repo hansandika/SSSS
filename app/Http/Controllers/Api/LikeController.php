@@ -60,22 +60,29 @@ class LikeController extends Controller
         if ($likeType === 0) {
             if ($comment->dislikedBy($user)) {
                 $comment->likes()->where('user_id', $user_id)->where('type', $likeType)->delete();
+                $user_rating = $comment->user->rating;
+
                 return response()->json([
-                    'message' => 'Comment dislike deleted'
+                    'message' => 'Comment dislike deleted',
+                    'user_rating' => $user_rating
                 ])->setStatusCode(200);
             }
 
             $like = $this->createLike($likeType, $user_id);
             $comment->likes()->save($like);
+            $user_rating = $comment->user->rating;
 
             return response()->json([
-                'message' => 'Comment dislike created'
+                'message' => 'Comment dislike created',
+                'user_rating' => $user_rating
             ])->setStatusCode(201);
         } else if ($likeType === 1) {
             if ($comment->likedBy($user)) {
                 $comment->likes()->where('user_id', $user_id)->where('type', $likeType)->delete();
+                $user_rating = $comment->user->rating;
                 return response()->json([
-                    'message' => 'Comment like deleted'
+                    'message' => 'Comment like deleted',
+                    'user_rating' => $user_rating
                 ])->setStatusCode(200);
             }
 
@@ -83,8 +90,11 @@ class LikeController extends Controller
 
             $comment->likes()->save($like);
 
+            $user_rating = $comment->user->rating;
+
             return response()->json([
-                'message' => 'Comment like created'
+                'message' => 'Comment like created',
+                'user_rating' => $user_rating
             ])->setStatusCode(201);
         }
     }
@@ -102,8 +112,6 @@ class LikeController extends Controller
                 'message' => 'Like Type is required'
             ])->setStatusCode(400);
         }
-
-
 
         $likeType = (int)$request->like_type;
         $user = Auth::user();

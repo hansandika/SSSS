@@ -93,7 +93,6 @@ class User extends Authenticatable
         return $this->id === $post->user_id;
     }
 
-
     public function getPostsCountAttribute(): int
     {
         return $this->posts()->count();
@@ -113,5 +112,11 @@ class User extends Authenticatable
     public function canUserPostComment($data)
     {
         return $data['latestCommentCreated']->diffInSeconds() > config('global.USER_COMMENT_DELAY');
+    }
+
+    public function getRatingAttribute(): float
+    {
+        $score = $this->comments->sum('likes_count');
+        return $score > 0 ? (float)$score / 5 : 0;
     }
 }
