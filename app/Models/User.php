@@ -119,4 +119,9 @@ class User extends Authenticatable
         $score = $this->comments->sum('likes_count');
         return $score > 0 ? (float)$score / 5 : 0;
     }
+
+    public function isAdmin($user): bool
+    {
+        return $user->role == 'admin';
+    }
 }

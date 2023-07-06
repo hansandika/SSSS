@@ -41,4 +41,11 @@ class CommentController extends Controller
             return redirect()->back()->withErrors(['post_slug' => 'Post not found']);
         }
     }
+
+    public function destroy(Comment $comment)
+    {
+        $this->authorize('delete', $comment);
+        $comment->delete();
+        return redirect()->back();
+    }
 }

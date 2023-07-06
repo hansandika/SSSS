@@ -27,9 +27,14 @@ class LoginController extends Controller
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             RenewTokenSession::refreshToken($request);
+
+            $user = Auth::user();
+            if ($user->isAdmin($user)) {
+                return redirect()->route('admin.index');
+            }
+
             return redirect('/')->with('success', 'Login Successfully');
         }
-
         return redirect('/login')->with('error', 'Invalid Credential');
     }
 
@@ -87,6 +92,7 @@ class LoginController extends Controller
 
         Auth::login($user);
         RenewTokenSession::refreshToken($request);
+
         return redirect('/')->with('success', 'Login Successfully');
     }
 }

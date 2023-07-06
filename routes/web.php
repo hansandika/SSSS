@@ -37,6 +37,14 @@ Route::patch("/posts/{slug}", [PostController::class, "update"])->name("posts.up
 Route::delete("/posts/{slug}", [PostController::class, "destroy"])->name("posts.destroy");
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 Route::get("/terms-and-condition", TermsAndConditionsController::class)->name("show.terms-and-conditions");
+
+Route::get("/admin", [AdminController::class, "index"])->name("admin.index");
+Route::get("/admin/posts", [AdminController::class, "posts"])->name("admin.posts");
+Route::get("/admin/users", [AdminController::class, "users"])->name("admin.users");
+Route::get("/admin/comments", [AdminController::class, "comments"])->name("admin.comments");
+Route::get("/admin/categories", [AdminController::class, "categories"])->name("admin.categories");
+Route::get("/admin/categories/create", [AdminController::class, "createCategory"])->name("admin.categories.create");
+Route::post("/admin/categories", [AdminController::class, "storeCategory"])->name("admin.categories.store");
