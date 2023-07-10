@@ -65,4 +65,12 @@ class AdminController extends Controller
 
         return redirect()->route('admin.categories')->with('success', 'Category created successfully');
     }
+
+    public function updateUserGlcStatus(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->glc_verified = !$user->glc_verified;
+        $user->save();
+        return redirect()->route('admin.users')->with('success', 'User GLC status updated successfully');
+    }
 }

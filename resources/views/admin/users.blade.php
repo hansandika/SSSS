@@ -6,6 +6,8 @@
                     <th class='p-2'>Profile</th>
                     <th class='p-2'>Email</th>
                     <th class='p-2'>Provider</th>
+                    <th class="p-2">GLC Verified</th>
+                    <th class="p-2">Action</th>
                 </tr>
                 @foreach ($users as $user)
                     <tr class='border-b'>
@@ -18,6 +20,17 @@
                         </td>
                         <td class='p-2'>{{ $user['email'] }}</td>
                         <td class='p-2'>{{ $user['provider'] }}</td>
+                        <td class='p-2'>{{ $user['glc_verified'] == 1 ? 'Yes' : 'No' }}</td>
+                        <td class="p-2">
+                            <form action="{{ route('admin.users.updateGlcStatus') }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                <button type="submit"
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2">Update
+                                    GLC Verified Status</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

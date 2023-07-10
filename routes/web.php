@@ -44,6 +44,7 @@ Route::get("/terms-and-condition", TermsAndConditionsController::class)->name("s
 Route::get("/admin", [AdminController::class, "index"])->name("admin.index");
 Route::get("/admin/posts", [AdminController::class, "posts"])->name("admin.posts");
 Route::get("/admin/users", [AdminController::class, "users"])->name("admin.users");
+Route::patch("/admin/users", [AdminController::class, "updateUserGlcStatus"])->name("admin.users.updateGlcStatus");
 Route::get("/admin/comments", [AdminController::class, "comments"])->name("admin.comments");
 Route::get("/admin/categories", [AdminController::class, "categories"])->name("admin.categories");
 Route::get("/admin/categories/create", [AdminController::class, "createCategory"])->name("admin.categories.create");

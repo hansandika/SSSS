@@ -7,6 +7,7 @@
                         <th class='p-2'>Profile</th>
                         <th class='p-2'>Email</th>
                         <th class='p-2'>Provider</th>
+                        <th class="p-2">GLC Verified</th>
                     </tr>
                     @foreach ($users as $user)
                         <tr class='border-b'>
@@ -19,6 +20,7 @@
                             </td>
                             <td class='p-2'>{{ $user['email'] }}</td>
                             <td class='p-2'>{{ $user['provider'] }}</td>
+                            <td class='p-2'>{{ $user['glc_verified'] == 1 ? 'Yes' : 'No' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

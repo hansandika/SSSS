@@ -11,7 +11,7 @@ class ContentWrapper extends Component
     public string $title;
     public string $link;
 
-    public function __construct(string $title, string $link)
+    public function __construct(string $title, string $link, bool $showLink = true)
     {
         $this->title = $title;
         $this->link = $link;
